@@ -20,20 +20,25 @@ public class Tile : MonoBehaviour
     }
 
     void Update()
+{
+    if (Input.GetMouseButtonDown(0))
     {
-        // klik kiri -> ubah warna jadi "tujuan"
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D hit = Physics2D.OverlapPoint(mousePos);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Collider2D hit = Physics2D.OverlapPoint(mousePos);
 
-            if (hit != null && hit.gameObject == gameObject)
+        if (hit != null && hit.gameObject == gameObject)
+        {
+            GameManager gm = FindObjectOfType<GameManager>();
+
+            // hanya bisa klik tile kalau karakter sedang dipilih
+            if (gm != null)
             {
-                sr.color = selectedColor;
                 gm.MovePlayer(new Vector3(x, y, 0));
             }
         }
     }
+}
+
 
     // efek hover
     void OnMouseEnter()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BoardGenerator : MonoBehaviour
 {
-    public GameObject tilePrefab; // assign di Inspector
+    public GameObject tilePrefab;
     public int width = 8;
     public int height = 8;
 
