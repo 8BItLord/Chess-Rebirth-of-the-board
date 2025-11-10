@@ -433,7 +433,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc676e4e0ef229f79970e68478aaaf45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  playerPrefab: {fileID: 4700920902390396920, guid: d93de323fadf110dcac38c1de5681131, type: 3}
+  characterPrefabs:
+  - {fileID: 4700920902390396920, guid: ebdc3e1011c0b870dbc93cdb22432482, type: 3}
+  spawnPositions:
+  - {x: 0, y: 0, z: -1}
 --- !u!4 &1952271450
 Transform:
   m_ObjectHideFlags: 0
