@@ -5,19 +5,25 @@ public class SelectableCharacter : MonoBehaviour
     private SpriteRenderer sr;
     public Sprite idleSprite;
     public Sprite selectedSprite;
-
     public bool isSelected = false;
 
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = idleSprite; // mulai dari idle
+        sr.sprite = idleSprite;
     }
 
     private void OnMouseDown()
     {
-        GameManager gm = FindObjectOfType<GameManager>();
-        gm.SelectCharacter(this);
+        GameManager gm = FindFirstObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.OnCharacterClicked(this);
+        }
+        else
+        {
+            Debug.LogWarning("GameManager not found in scene!");
+        }
     }
 
     public void SetSelected(bool selected)

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -8040397873578106367}
   - component: {fileID: 5391192440132838612}
   - component: {fileID: -8105329216105728836}
-  - component: {fileID: 2651522027059919251}
   m_Layer: 0
   m_Name: Gatotkaca
   m_TagString: Untagged
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4700920902390396920}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.29791, y: 2.78949, z: 0}
+  m_LocalPosition: {x: 4, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -80,9 +79,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 449616609
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -158,31 +157,3 @@ MonoBehaviour:
   idleSprite: {fileID: 6296431835849094428, guid: de1d82dfbc5e6b8158c1e496368884c6, type: 3}
   selectedSprite: {fileID: -3475223390688383129, guid: a7dbd7f2fb4ec48878bdf24cc9262fae, type: 3}
   isSelected: 0
---- !u!114 &2651522027059919251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4700920902390396920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e2708607c4944e88c38aef56deeeaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  data:
-    characterName: Gatotkaca
-    maxHP: 780
-    attack: 74
-    defense: 28
-    moveRange: 1
-    moveType: Orthogonal
-    attackRange: 1
-    attackDamage: 100
-    skillName: Sky Leap Impact
-    skillDescription: Melompat ke tile target dalam jarak 3 tile orthogonal. Saat
-      mendarat, memberikan damage AoE kepada seluruh musuh di area 3x3 di sekitar
-      posisi landing.
-    skillDamage: 180
-    skillRange: 3
-    skillCooldown: 2

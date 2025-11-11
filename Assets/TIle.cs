@@ -7,10 +7,12 @@ public class Tile : MonoBehaviour
     public int y;
 
     private SpriteRenderer sr;
-    private Color baseColor;
-    private Color hoverColor = new Color(0.6f, 0.9f, 1f, 1f);
-    private Color movableColor = new Color(0.7f, 1f, 0.7f, 1f);
-    private Color invalidColor = new Color(1f, 0.4f, 0.4f, 1f);
+
+    // Warna tile (pakai transparansi supaya tidak nutup background)
+    private Color baseColor = new Color(1f, 1f, 1f, 0f); // transparan default
+    private Color hoverColor = new Color(0.6f, 0.9f, 1f, 0.6f); // biru muda transparan saat hover
+    private Color movableColor = new Color(0.6f, 1f, 0.6f, 0.6f); // hijau muda transparan saat bisa digerak
+    private Color invalidColor = new Color(1f, 0.3f, 0.3f, 0.7f); // merah untuk invalid klik
 
     private GameManager gm;
     public bool isMovable = false;
@@ -19,7 +21,20 @@ public class Tile : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        baseColor = sr.color;
+
+#if UNITY_EDITOR
+        if (!Application.isPlaying)
+            sr.color = new Color(1f, 1f, 1f, 0.25f); // kelihatan di editor
+        else
+            sr.color = baseColor; // saat Play, tile transparan
+#else
+        sr.color = baseColor; // build game
+#endif
+
+        // pastikan sorting layer benar
+        sr.sortingLayerName = "Tiles";
+        sr.sortingOrder = 1;
+
         gm = FindFirstObjectByType<GameManager>();
     }
 
@@ -32,28 +47,23 @@ public class Tile : MonoBehaviour
 
             if (hit != null && hit.gameObject == gameObject)
             {
-                if (isMovable && gm != null)
-                {
-                    gm.MovePlayer(new Vector3(x, y, 0));
-                }
-                else if (!isMovable && !isFlashing)
-                {
-                    StartCoroutine(FlashInvalid());
-                }
+                if (gm != null)
+                    gm.OnTileClicked(this);
+                else
+                    Debug.LogWarning("GameManager not found in scene!");
             }
         }
     }
 
     void OnMouseEnter()
     {
-        if (isFlashing) return; // ⛔ Jangan ubah warna pas lagi merah
-        if (!isMovable)
-            sr.color = hoverColor;
+        if (isFlashing) return;
+        sr.color = isMovable ? movableColor : hoverColor;
     }
 
     void OnMouseExit()
     {
-        if (isFlashing) return; // ⛔ Jangan ubah warna pas lagi merah
+        if (isFlashing) return;
         sr.color = isMovable ? movableColor : baseColor;
     }
 
@@ -73,14 +83,24 @@ public class Tile : MonoBehaviour
     private IEnumerator FlashInvalid()
     {
         isFlashing = true;
-        Color prev = sr.color;
-
-        // merah cepat
         sr.color = invalidColor;
         yield return new WaitForSeconds(0.2f);
-
-        // pastikan warna balik sesuai status tile
         sr.color = isMovable ? movableColor : baseColor;
         isFlashing = false;
     }
+
+    public void TriggerInvalidClickFeedback()
+    {
+        if (!isFlashing)
+            StartCoroutine(FlashInvalid());
+    }
+
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        // bantu kelihatan grid tile di editor
+        Gizmos.color = new Color(1f, 1f, 1f, 0.1f);
+        Gizmos.DrawWireCube(transform.position, Vector3.one);
+    }
+#endif
 }
